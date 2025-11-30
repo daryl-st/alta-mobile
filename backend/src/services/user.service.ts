@@ -19,10 +19,10 @@ export const getUser = async () => { // i dont need to deal with HTTP requests h
     return users;
 }
 
-export const createUser = async (userData: { fname: string, email: string, password: string }) => {
+export const createUser = async (userData: { name: string, email: string, password: string }) => {
     const user = await prisma.users.create({
         data: { 
-            name: userData.fname, 
+            name: userData.name, 
             email: userData.email, 
             password: userData.password 
         }
