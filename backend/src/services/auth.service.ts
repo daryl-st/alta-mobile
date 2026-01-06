@@ -10,14 +10,14 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN as string;
 
 export const registerUser = async (name: string, email: string, password: string) => {
     // if email exists
-    const existingUser = await prisma.users.findUnique({ where: {email} });
+    const existingUser = await prisma.user.findUnique({ where: {email} });
     if (existingUser) throw new Error("Email Already Exist");
 
     // hash password
     const hasedPass = await bcrypt.hash(password, 10);
 
     // create new user
-    const newUser = await prisma.users.create({
+    const newUser = await prisma.user.create({
         data: { name, email, password: hasedPass }
     });
 
@@ -31,7 +31,7 @@ export const registerUser = async (name: string, email: string, password: string
 
 export const loginUser = async (email: string, password: string) => {
     // check user email exists
-    const user = await prisma.users.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) throw new Error("Invalid email or password!");
 
     // check password

@@ -1,8 +1,8 @@
-import type { NextFunction, Request, Response } from "express";
+import type { Request, Response } from "express";
 import { createUser, getUser } from "../services/user.service.js";
 import { AppError } from "../middlewares/errorHandler.js";
 
-export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+export const getUsers = async (req: Request, res: Response) => {
   const userData = await getUser();
 
   // flexing our AppError Hanlder

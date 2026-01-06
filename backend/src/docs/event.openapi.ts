@@ -52,6 +52,7 @@ export function registerEventsDocs(registry: OpenAPIRegistry) {
         description: "Register to an event",
         tags: ["Events"],
         request: {
+            params: z.object({ id: z.number() }),
             body: {
                 content: {
                     "application/json": {
