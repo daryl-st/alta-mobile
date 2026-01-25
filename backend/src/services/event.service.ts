@@ -2,7 +2,8 @@ import prisma from "../config/db.js";
 import { AppError } from "../middlewares/errorHandler.js";
 import { getUserByEmail } from "./user.service.js";
 
-export const getEvents = async () => { // get all events
+export const getEvents = async () => {
+    // get all events
     const events = await prisma.event.findMany({
         select: {
             title: true,
@@ -12,11 +13,11 @@ export const getEvents = async () => { // get all events
             location: true,
             start_time: true,
             end_time: true,
-        }
+        },
     });
 
     return events;
-}
+};
 
 export const getEventById = async (id: number) => {
     const event = await prisma.event.findUnique({
@@ -29,13 +30,17 @@ export const getEventById = async (id: number) => {
             location: true,
             start_time: true,
             end_time: true,
-        }
+        },
     });
 
     return event;
-}
+};
 
-export const registerEvent = async (eventId: number, clientId: number, email: string) => {
+export const registerEvent = async (
+    eventId: number,
+    clientId: number,
+    email: string,
+) => {
     // get user info from name and email
     const userId = await getUserByEmail(email);
 
@@ -51,4 +56,15 @@ export const registerEvent = async (eventId: number, clientId: number, email: st
     });
 
     return register;
-}
+};
+
+// Will be implemented later
+// export const cancelEvent = async (eventId: number, clientId: number) => {
+//     const event = await prisma.eventAttendee.findUnique({
+//         where: { event_id: eventId },
+//         select: {
+//             event_id: true,
+//             user_id: true,
+//         },
+//     });
+// };
