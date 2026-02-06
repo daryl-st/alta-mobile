@@ -35,8 +35,8 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                     labelText: "Email",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12)
-                    )
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -68,11 +68,12 @@ class _LoginState extends State<Login> {
                     if (value.length < 6) {
                       return "Minimum 6 characters";
                     }
+                    return null;
                   },
                 ),
 
                 const SizedBox(height: 24),
-                
+
                 SizedBox(
                   width: 150,
                   child: ElevatedButton(
@@ -87,9 +88,9 @@ class _LoginState extends State<Login> {
                     child: const Text("Login"),
                   ),
                 ),
-            
+
                 const SizedBox(height: 16),
-            
+
                 TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/signup');
