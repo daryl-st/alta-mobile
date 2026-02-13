@@ -4,6 +4,7 @@ import 'package:frontend/utils/constants.dart';
 // import './presentation/screens/auth/login.dart';
 // import './presentation/screens/auth/signup.dart';
 import 'screens/home_screen.dart';
+import 'screens/service_screen.dart';
 
 void main() {
   runApp(const AltaApp());
@@ -40,7 +41,8 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _screens = const [
     HomeScreen(),
-    Center(child: Text("Service Page", style: TextStyle(fontSize: 24))),
+    ServiceScreen(),
+    // Center(child: Text("Service Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Blog Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Contact Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("About Page", style: TextStyle(fontSize: 24))),
