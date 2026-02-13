@@ -9,7 +9,7 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 60),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -25,18 +25,31 @@ class HeroSection extends StatelessWidget {
         children: [
           Text(
             "Your Path to Better Mental Wellness Start Here",
-            style: AppTextStyles.headline.copyWith(fontSize: 48, height: 1.2),
+            style: AppTextStyles.headline.copyWith(
+              fontSize: 26,
+              height: 1.5,
+              color: Colors.black,
+            ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 20),
+          Text(
+            "Your Path to Better Mental Wellness Start Here. Your Path to Better Mental Wellness Start Here. Your Path to Better Mental Wellness Start Here. Your Path to Better Mental Wellness Start Here",
+            style: AppTextStyles.body.copyWith(
+              fontSize: 18,
+              // height: 1.2,
+              color: Colors.grey[700],
+            ),
+          ),
+          const SizedBox(height: 40),
           Row(
             children: [
               AppointmentButton(text: "Book Appointment", onPressed: () {}),
               const SizedBox(width: 16),
-              AppointmentButton(
-                text: "Explore Services",
-                onPressed: () {},
-                isOutlined: true,
-              ),
+              // AppointmentButton( // No secondary button for now
+              //   text: "Explore Services",
+              //   onPressed: () {},
+              //   isOutlined: true,
+              // ),
             ],
           ),
         ],

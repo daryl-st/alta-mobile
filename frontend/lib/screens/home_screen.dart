@@ -15,13 +15,13 @@ class HomeScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 100,
+            expandedHeight: 60,
             floating: true,
             pinned: true,
             title: const Text(
-              'Alta',
+              'Alta Counseling',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),
@@ -31,15 +31,16 @@ class HomeScreen extends StatelessWidget {
             elevation: 0,
           ),
           SliverToBoxAdapter(
+            // this essential to put regular widget like column inside silver
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 HeroSection(),
                 EventsSection(),
                 BookingSection(),
-                TestimonialsSection(),
                 FaqSection(),
-                SizedBox(height: 40),
+                TestimonialsSection(),
+                // SizedBox(height: 20), // Extra space for bottom nav
               ],
             ),
           ),

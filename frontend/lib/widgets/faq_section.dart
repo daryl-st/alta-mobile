@@ -33,7 +33,7 @@ class FaqSection extends StatelessWidget {
             subtitle:
                 'Have questions? We\'ve got answers. Here are some of the most common questions people ask about Alta. If you don\'t find what you\'re looking for, feel free to reach out — we\'re happy to help.',
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 12),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -43,7 +43,7 @@ class FaqSection extends StatelessWidget {
                 title: Text(
                   faqs[index]['question']!,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -54,7 +54,7 @@ class FaqSection extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsetsGeometry.symmetric(vertical: 16),
                       child: Text(
-                        '+ ${faqs[index]['answer']!}',
+                        faqs[index]['answer']!,
                         style: AppTextStyles.body,
                       ),
                     ),

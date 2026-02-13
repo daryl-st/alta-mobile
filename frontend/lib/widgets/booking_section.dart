@@ -8,10 +8,10 @@ class BookingSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(24),
+      // margin: EdgeInsets.all(24),
       padding: EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.05),
+        color: AppColors.primary.withValues(alpha: 0.1),
       ),
       child: Column(
         children: [

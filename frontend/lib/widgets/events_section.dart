@@ -20,7 +20,7 @@ class EventsSection extends StatelessWidget {
           'Join our bi-weekly guided meditation group. Open to all levels, this session focuses on breath work, mindfulness, and emotional grounding.',
     ),
     Event(
-      title: 'Basic Counseling Skill Training',
+      title: 'Counseling Skill Training',
       date: 'May 19 | 5 Full Days',
       location: 'Virtual',
       description:
@@ -40,8 +40,9 @@ class EventsSection extends StatelessWidget {
             subtitle:
                 'Stay informed about our latest workshops, group sessions, and wellness retreats. All events are designed to support your mental health journey in a safe, supportive environment.',
           ),
-          const SizedBox(height: 32),
+          // const SizedBox(height: 12),
           ListView.separated(
+            // create special list with constant spacing
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -114,8 +115,8 @@ class _EventCard extends StatelessWidget {
           Text(
             event.location,
             style: TextStyle(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w600,
+              color: AppColors.primary.withValues(alpha: 0.8),
+              fontWeight: FontWeight.normal,
             ),
           ),
           const SizedBox(height: 12),
