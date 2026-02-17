@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/about_screen.dart';
+import 'package:frontend/screens/contact_screen.dart';
 import 'package:frontend/utils/constants.dart';
 // import './presentation/screens/auth/login.dart';
 // import './presentation/screens/auth/signup.dart';
@@ -44,7 +45,7 @@ class _MainNavigationState extends State<MainNavigation> {
     HomeScreen(),
     ServiceScreen(),
     Center(child: Text("Blog Page", style: TextStyle(fontSize: 24))),
-    Center(child: Text("Contact Page", style: TextStyle(fontSize: 24))),
+    ContactScreen(),
     AboutScreen(),
   ];
 
