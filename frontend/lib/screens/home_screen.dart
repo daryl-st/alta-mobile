@@ -21,12 +21,12 @@ class HomeScreen extends StatelessWidget {
             title: const Text(
               'Alta Counseling',
               style: TextStyle(
-                fontSize: 26,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: AppColors.textPrimary,
               ),
             ),
-            centerTitle: false,
+            centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
           ),

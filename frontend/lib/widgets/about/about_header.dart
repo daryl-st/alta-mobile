@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
-import './stat_section.dart';
+import '../../utils/constants.dart';
+import '../../models/about.dart';
 
-class ServiceHeader extends StatelessWidget {
-  const ServiceHeader({super.key});
+class AboutHeader extends StatelessWidget {
+  const AboutHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ServiceHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Helping You Restore Balance and Wellness.',
+            About.tagLine,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -23,11 +23,13 @@ class ServiceHeader extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Discover compassionate, personalized care tailored to your needs. Our therapists provide a safe, judgment-free space where you can explore your thoughts, feelings, and challenges.',
-            style: AppTextStyles.body.copyWith(fontSize: 16, height: 1.5),
+            About.description,
+            style: AppTextStyles.body.copyWith(
+              fontSize: 16,
+              color: Colors.grey[700],
+              height: 1.3,
+            ),
           ),
-          const SizedBox(height: 24),
-          const StatSection(),
         ],
       ),
     );

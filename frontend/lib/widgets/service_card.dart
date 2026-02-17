@@ -53,7 +53,7 @@ class ServiceCard extends StatelessWidget {
                   size: 24,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   service.name,

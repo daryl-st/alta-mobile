@@ -19,12 +19,12 @@ class ServiceScreen extends StatelessWidget {
             title: const Text(
               'Services',
               style: TextStyle(
-                fontSize: 26,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),
             ),
-            centerTitle: false,
+            centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
             actions: [

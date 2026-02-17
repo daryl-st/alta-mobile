@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/about_screen.dart';
 import 'package:frontend/utils/constants.dart';
 // import './presentation/screens/auth/login.dart';
 // import './presentation/screens/auth/signup.dart';
@@ -42,10 +43,9 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _screens = const [
     HomeScreen(),
     ServiceScreen(),
-    // Center(child: Text("Service Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Blog Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Contact Page", style: TextStyle(fontSize: 24))),
-    Center(child: Text("About Page", style: TextStyle(fontSize: 24))),
+    AboutScreen(),
   ];
 
   @override
