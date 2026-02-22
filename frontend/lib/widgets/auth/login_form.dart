@@ -2,65 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/constants.dart';
 import 'package:frontend/widgets/common/appointment_button.dart';
 
-class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
   @override
-  State<RegisterForm> createState() => _RegisterFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPassController = TextEditingController();
 
-  bool _obsecurePassword = true;
-  bool _obsecureConfirmPass = true;
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 120),
+      padding: EdgeInsets.symmetric(horizontal: 100, vertical: 200),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Register',
+            'Welcome back',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           Form(
             key: _formKey,
             child: Column(
               children: [
-                // Name field
-                _buildTextField(
-                  controller: _nameController,
-                  label: "Full Name",
-                  prefixIcon: Icons.person_outline,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Required';
-                    }
-                    if (value.split(' ').length < 2) {
-                      return 'Full name Required';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 14),
-
-                // email field
+                // Email field
                 _buildTextField(
                   controller: _emailController,
                   label: 'Email',
-                  prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
+                  prefixIcon: Icons.email_outlined,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Required';
@@ -75,72 +56,37 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 const SizedBox(height: 14),
 
-                // password field
                 _buildTextField(
                   controller: _passwordController,
-                  obsecureText: _obsecurePassword,
-                  prefixIcon: Icons.lock_outline,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _obsecurePassword = !_obsecurePassword;
-                      });
-                    },
-                    icon: Icon(
-                      _obsecurePassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    color: Colors.grey[600],
-                  ),
                   label: 'Password',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Required';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 14),
-
-                // confirm password field
-                _buildTextField(
-                  controller: _confirmPassController,
-                  obsecureText: _obsecureConfirmPass,
+                  obsecureText: _obscurePassword,
                   prefixIcon: Icons.lock_outline,
-                  label: 'Confirm Password',
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        _obsecureConfirmPass = !_obsecureConfirmPass;
+                        _obscurePassword = !_obscurePassword;
                       });
                     },
                     icon: Icon(
-                      _obsecureConfirmPass
+                      _obscurePassword
                           ? Icons.visibility_off
                           : Icons.visibility,
                     ),
-                    color: Colors.grey[600],
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Required';
                     }
-                    if (value != _passwordController.text) {
-                      return 'Passwords needs to match';
-                    }
                     return null;
                   },
                 ),
                 const SizedBox(height: 14),
-                const Text('I Agree to the Terms & Conditions.'),
-                const SizedBox(height: 24),
 
                 SizedBox(
-                  width: double.infinity,
                   height: 56,
+                  width: double.infinity,
                   child: AppointmentButton(
-                    text: 'Register',
+                    text: 'Login',
                     onPressed: _submitForm,
                   ),
                 ),
@@ -220,7 +166,6 @@ class _RegisterFormState extends State<RegisterForm> {
       );
 
       final userData = {
-        "name": _nameController.text,
         "email": _emailController.text,
         "password": _passwordController.text,
       };
@@ -228,21 +173,10 @@ class _RegisterFormState extends State<RegisterForm> {
       print('user Data: $userData');
 
       // clear form
-      _nameController.clear();
       _emailController.clear();
       _passwordController.clear();
-      _confirmPassController.clear();
 
       // Navigate
     }
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPassController.dispose();
-    super.dispose();
   }
 }

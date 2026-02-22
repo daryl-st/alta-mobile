@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/constants.dart';
 import 'package:frontend/widgets/auth/register_form.dart';
 
 class RegisterScreen extends StatelessWidget {

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/about_screen.dart';
 import 'package:frontend/screens/contact_screen.dart';
+import 'package:frontend/screens/login_screen.dart';
 import 'package:frontend/screens/register_screen.dart';
 import 'package:frontend/utils/constants.dart';
 // import './presentation/screens/auth/login.dart';
@@ -45,7 +46,8 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _screens = const [
     HomeScreen(),
     ServiceScreen(),
-    Center(child: RegisterScreen()),
+    // Center(child: RegisterScreen()),
+    LoginScreen(),
     ContactScreen(),
     AboutScreen(),
   ];
