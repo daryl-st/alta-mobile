@@ -2,8 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/about_screen.dart';
 import 'package:frontend/screens/contact_screen.dart';
-import 'package:frontend/screens/login_screen.dart';
-import 'package:frontend/screens/register_screen.dart';
+import 'package:frontend/screens/auth/login_screen.dart';
+import 'package:frontend/screens/auth/register_screen.dart';
 import 'package:frontend/utils/constants.dart';
 // import './presentation/screens/auth/login.dart';
 // import './presentation/screens/auth/signup.dart';
@@ -28,8 +28,26 @@ class AltaApp extends StatelessWidget {
         fontFamily: 'Inter',
         scaffoldBackgroundColor: Colors.grey[50],
       ),
-      home: MainNavigation(),
+      // home: MainNavigation(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthWrapper(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const MainNavigation(),
+      },
     );
+  }
+}
+
+// simple wrapper to decide which screen to show first
+// will be upgraded to functional switch when handling API
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const LoginScreen();
   }
 }
 
@@ -46,8 +64,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _screens = const [
     HomeScreen(),
     ServiceScreen(),
-    // Center(child: RegisterScreen()),
-    LoginScreen(),
+    Center(child: Text('Blog Page', style: AppTextStyles.subheadline)),
     ContactScreen(),
     AboutScreen(),
   ];

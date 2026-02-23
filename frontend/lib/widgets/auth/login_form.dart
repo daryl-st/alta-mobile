@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/constants.dart';
 import 'package:frontend/widgets/common/appointment_button.dart';
+import 'package:frontend/widgets/common/section_header.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -19,17 +20,13 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 100, vertical: 200),
+      padding: EdgeInsets.symmetric(horizontal: 36, vertical: 240),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Welcome back',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
+          SectionHeader(
+            title: 'Welcome Back',
+            subtitle: 'Login to manage your appointments and progress.',
           ),
           const SizedBox(height: 20),
           Form(
@@ -89,6 +86,14 @@ class _LoginFormState extends State<LoginForm> {
                     text: 'Login',
                     onPressed: _submitForm,
                   ),
+                ),
+
+                // const SizedBox(height: 14),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  child: const Text("Don't have an account? Register"),
                 ),
               ],
             ),
@@ -156,7 +161,7 @@ class _LoginFormState extends State<LoginForm> {
       // success snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Message sent successfully!'),
+          content: const Text('Logged In!'),
           backgroundColor: AppColors.primary,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -177,6 +182,7 @@ class _LoginFormState extends State<LoginForm> {
       _passwordController.clear();
 
       // Navigate
+      Navigator.pushReplacementNamed(context, '/home');
     }
   }
 }

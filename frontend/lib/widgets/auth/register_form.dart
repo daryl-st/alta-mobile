@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/constants.dart';
 import 'package:frontend/widgets/common/appointment_button.dart';
+import 'package:frontend/widgets/common/section_header.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -22,16 +23,13 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 120),
+      padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 150),
       child: Column(
         children: [
-          Text(
-            'Register',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
+          SectionHeader(
+            title: 'Create an Account',
+            subtitle:
+                'Signup to access personalized therapy and mental health tools.',
           ),
           const SizedBox(height: 30),
           Form(
@@ -144,6 +142,16 @@ class _RegisterFormState extends State<RegisterForm> {
                     onPressed: _submitForm,
                   ),
                 ),
+
+                // const SizedBox(height: 8),
+                TextButton(
+                  onPressed: () {
+                    // go back to login
+                    Navigator.pop(context);
+                    // Navigator.pushNamed(context, '/login');
+                  },
+                  child: const Text('Already have an account? Login'),
+                ),
               ],
             ),
           ),
@@ -210,7 +218,7 @@ class _RegisterFormState extends State<RegisterForm> {
       // success snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Message sent successfully!'),
+          content: const Text('User Registered Succesfully!'),
           backgroundColor: AppColors.primary,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -234,6 +242,7 @@ class _RegisterFormState extends State<RegisterForm> {
       _confirmPassController.clear();
 
       // Navigate
+      Navigator.pushReplacementNamed(context, '/home');
     }
   }
 
