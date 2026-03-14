@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:frontend/utils/constants.dart';
 import 'package:frontend/widgets/common/appointment_button.dart';
 import 'package:frontend/widgets/common/section_header.dart';
@@ -134,13 +136,41 @@ class _RegisterFormState extends State<RegisterForm> {
                 const Text('I Agree to the Terms & Conditions.'),
                 const SizedBox(height: 24),
 
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: AppointmentButton(
-                    text: 'Register',
-                    onPressed: _submitForm,
-                  ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: 56,
+                //   child: AppointmentButton(
+                //     text: 'Register',
+                //     onPressed: _submitForm,
+                //   ),
+                // ),
+                Consumer<AuthProvider>(
+                  builder: (context, authProvider, child) {
+                    if (authProvider.isLoading) {
+                      return CircularProgressIndicator();
+                    }
+
+                    // show error if any
+                    if (authProvider.error != null) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(authProvider.error!),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        authProvider.clearError();
+                      });
+                    }
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: AppointmentButton(
+                        text: 'Register',
+                        onPressed: _submitForm,
+                      ),
+                    );
+                  },
                 ),
 
                 // const SizedBox(height: 8),
@@ -213,36 +243,46 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // success snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('User Registered Succesfully!'),
-          backgroundColor: AppColors.primary,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      bool success;
+
+      success = await authProvider.register(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        name: _nameController.text,
       );
 
-      final userData = {
-        "name": _nameController.text,
-        "email": _emailController.text,
-        "password": _passwordController.text,
-      };
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('User Registered Succesfully!'),
+            backgroundColor: AppColors.primary,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
 
-      print('user Data: $userData');
+        // Navigate
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+
+      // final userData = {
+      //   "name": _nameController.text,
+      //   "email": _emailController.text,
+      //   "password": _passwordController.text,
+      // };
+
+      // print('user Data: $userData');
 
       // clear form
       _nameController.clear();
       _emailController.clear();
       _passwordController.clear();
       _confirmPassController.clear();
-
-      // Navigate
-      Navigator.pushReplacementNamed(context, '/home');
     }
   }
 

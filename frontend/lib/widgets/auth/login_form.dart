@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/utils/constants.dart';
 import 'package:frontend/widgets/common/appointment_button.dart';
 import 'package:frontend/widgets/common/section_header.dart';
@@ -7,7 +10,7 @@ class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<LoginForm> createState() => _LoginFormState(); // will be back
 }
 
 class _LoginFormState extends State<LoginForm> {
@@ -79,13 +82,50 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 const SizedBox(height: 14),
 
-                SizedBox(
-                  height: 56,
-                  width: double.infinity,
-                  child: AppointmentButton(
-                    text: 'Login',
-                    onPressed: _submitForm,
-                  ),
+                // SizedBox(
+                //   height: 56,
+                //   width: double.infinity,
+                //   child: AppointmentButton(
+                //     text: 'Login',
+                //     onPressed: _submitForm,
+                //   ),
+                // ),
+
+                // we can also use Provider.of() or Selector
+                Consumer<AuthProvider>(
+                  builder: (context, authProvider, child) {
+                    if (authProvider.isLoading) {
+                      return CircularProgressIndicator();
+                    }
+
+                    // show error if any
+                    if (authProvider.error != null) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(authProvider.error!),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        authProvider.clearError();
+                      });
+                    }
+                    return SizedBox(
+                      height: 56,
+                      width: double.infinity,
+                      // child: ElevatedButton(
+                      //   onPressed: () => _submitForm(context),
+                      //   style: ElevatedButton.styleFrom(
+                      //     minimumSize: const Size(double.infinity, 50),
+                      //   ),
+                      //   child: Text('Login'),
+                      // ),
+                      child: AppointmentButton(
+                        text: 'Login',
+                        onPressed: _submitForm,
+                      ),
+                    );
+                  },
                 ),
 
                 // const SizedBox(height: 14),
@@ -156,33 +196,52 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // success snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Logged In!'),
-          backgroundColor: AppColors.primary,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+      // gets the instance of AuthProvider from higher up in the widget tree, and listen false means i don't want to rebuild when provider change
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      // it's efficient to call methods (like login/logout)
+      bool success;
+
+      success = await authProvider.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
       );
 
-      final userData = {
-        "email": _emailController.text,
-        "password": _passwordController.text,
-      };
+      // mounted tells widget is still in the tree, so it prevent disposed context -> CRASH!
+      if (success && mounted) {
+        // success snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Login Successful!'),
+            backgroundColor: AppColors.primary,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+        // Navigate
+        Navigator.pushReplacementNamed(context, '/home');
+      }
 
-      print('user Data: $userData');
+      // final userData = {
+      //   "email": _emailController.text,
+      //   "password": _passwordController.text,
+      // };
+
+      // print('user Data: $userData');
 
       // clear form
       _emailController.clear();
       _passwordController.clear();
-
-      // Navigate
-      Navigator.pushReplacementNamed(context, '/home');
     }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

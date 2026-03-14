@@ -1,10 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/screens/about_screen.dart';
 import 'package:frontend/screens/contact_screen.dart';
 import 'package:frontend/screens/auth/login_screen.dart';
 import 'package:frontend/screens/auth/register_screen.dart';
 import 'package:frontend/utils/constants.dart';
+import 'package:provider/provider.dart';
 // import './presentation/screens/auth/login.dart';
 // import './presentation/screens/auth/signup.dart';
 import 'screens/home_screen.dart';
@@ -19,23 +21,26 @@ class AltaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Alta - Mental Welness',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors
-            .teal, // this is replaced by colorScheme: material3. we will work on it on the next project
-        fontFamily: 'Inter',
-        scaffoldBackgroundColor: Colors.grey[50],
+    return ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: MaterialApp(
+        title: 'Alta - Mental Welness',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors
+              .teal, // this is replaced by colorScheme: material3. we will work on it on the next project
+          fontFamily: 'Inter',
+          scaffoldBackgroundColor: Colors.grey[50],
+        ),
+        // home: MainNavigation(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const AuthWrapper(),
+          '/login': (context) => const LoginScreen(),
+          '/register': (context) => const RegisterScreen(),
+          '/home': (context) => const MainNavigation(),
+        },
       ),
-      // home: MainNavigation(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const AuthWrapper(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterScreen(),
-        '/home': (context) => const MainNavigation(),
-      },
     );
   }
 }
@@ -47,7 +52,21 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoginScreen();
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        if (authProvider.isLoading) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (authProvider.isAuthenticated) {
+          return const HomeScreen();
+        }
+
+        return const LoginScreen();
+      },
+    );
   }
 }
 
