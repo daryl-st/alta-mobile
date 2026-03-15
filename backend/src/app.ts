@@ -13,6 +13,16 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+const corsOrigin = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:8081']
+
+// app.use(cors({
+//     origin: 'http://localhost:38025',
+//     credentials: true,
+//     methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
+
 app.use(cors());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));

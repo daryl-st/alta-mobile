@@ -13,14 +13,19 @@ export const signup = async (req: Request, res: Response) => {
         const { token, newUser } = await registerUser(name, email, password);
 
         res.status(200).json({
+            success: true,
             message: "User registred succesfully!",
-            token,
-            user: { id: newUser.id, name: newUser.name, email: newUser.email },
+            data: {
+                user: { id: newUser.id, name: newUser.name, email: newUser.email },
+                token,
+            }
         });
     } catch (err) {
         console.error("User registration failed:", err);
         res.status(500).json({ 
-            message: "Internal Server Error", error: err instanceof Error ? err.message : err 
+            success: false,
+            message: "Internal Server Error" + err, 
+            // error: err instanceof Error ? err.message : err 
         });
     }
 };
@@ -37,16 +42,21 @@ export const login = async (req: Request, res: Response) => {
         const { token, user } = await loginUser(email, password);
 
         res.status(200).json({
+            success: true,
             message: "Loggin in succesfully!",
-            token,
-            user: {
-                id: user.id, name: user.name, email: user.email,
+            data: {
+                user: {
+                    id: user.id, name: user.name, email: user.email,
+                },
+                token,
             }
         });
     } catch (err) {
         console.error("User registration failed:", err);
         res.status(500).json({ 
-            message: "Internal Server Error", error: err instanceof Error ? err.message : err 
+            success: false,
+            message: "Internal Server Error:" + err, 
+            // error: err instanceof Error ? err.message : err 
         });
     }
 }

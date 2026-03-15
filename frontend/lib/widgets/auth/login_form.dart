@@ -203,10 +203,12 @@ class _LoginFormState extends State<LoginForm> {
       // it's efficient to call methods (like login/logout)
       bool success;
 
-      success = await authProvider.login(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      );
+      // because of the async operation the values might get disposed before login call (since it's async)
+      // so we can store it BEFORE await
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+
+      success = await authProvider.login(email: email, password: password);
 
       // mounted tells widget is still in the tree, so it prevent disposed context -> CRASH!
       if (success && mounted) {

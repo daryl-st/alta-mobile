@@ -9,7 +9,8 @@ class Api {
   Api._internal();
 
   final TokenStorage _tokenStorage = TokenStorage();
-  static const String baseUrl = 'http://localhost:3000/';
+  // static const String baseUrl = 'http://localhost:3000/auth';
+  static const String baseUrl = 'http://10.47.145.142:3000/auth';
 
   Future<Map<String, String>> _getHeaders({bool requireAuth = true}) async {
     // if no authentication needed, we can call this function with requireAuth false
@@ -44,6 +45,8 @@ class Api {
             ? json.encode(body) // convert Dart Map to JSON string
             : null,
       );
+
+      print(response.body);
 
       return json.decode(response.body); // convert it back to Dart Map
     } catch (err) {

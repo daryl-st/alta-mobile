@@ -7,8 +7,6 @@ import 'package:frontend/screens/auth/login_screen.dart';
 import 'package:frontend/screens/auth/register_screen.dart';
 import 'package:frontend/utils/constants.dart';
 import 'package:provider/provider.dart';
-// import './presentation/screens/auth/login.dart';
-// import './presentation/screens/auth/signup.dart';
 import 'screens/home_screen.dart';
 import 'screens/service_screen.dart';
 
@@ -61,7 +59,7 @@ class AuthWrapper extends StatelessWidget {
         }
 
         if (authProvider.isAuthenticated) {
-          return const HomeScreen();
+          return const MainNavigation();
         }
 
         return const LoginScreen();
