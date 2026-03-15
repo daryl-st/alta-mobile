@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/providers/auth_provider.dart';
 import 'package:frontend/widgets/common/appointment_button.dart';
+import 'package:provider/provider.dart';
 import '../widgets/about/about_header.dart';
 import '../widgets/about/core_values_grid.dart';
 import '../widgets/about/mission_vison_card.dart';
@@ -105,7 +107,29 @@ class AboutScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
+                // temporary logout button
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Builder(
+                    builder: (context) {
+                      return ElevatedButton(
+                        onPressed: () async {
+                          await Provider.of<AuthProvider>(
+                            context,
+                            listen: false,
+                          ).logout();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.secondary,
+                        ),
+                        child: Text('Logout'),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
